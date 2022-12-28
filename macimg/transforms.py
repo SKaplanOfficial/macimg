@@ -6,15 +6,6 @@ import Quartz
 
 from .core import Color, Image
 
-class TransformList:
-    def __init__(self, *transforms: 'Transform'):
-        self.transforms = transforms
-
-    def apply_to(self, image: Image):
-        for transform in self.transforms:
-            image = transform.apply_to(image)
-        return image
-
 class Transform:
     def __init__(self):
         self._transform = None

@@ -5,17 +5,10 @@ import Quartz
 
 from .core import Color, Image
 
-class FilterList:
-    def __init__(self, *filters: 'Filter'):
-        self.filters = filters
-
-    def apply_to(self, image: Image):
-        for filter in self.filters:
-            image = filter.apply_to(image)
-        return image
-
 class Filter:
     def __init__(self, filter_name):
+        self._size = None
+        self._bounds = None
         self._cifilter = Quartz.CIFilter.filterWithName_(filter_name)
         self._cifilter.setDefaults()
 
@@ -29,17 +22,20 @@ class Filter:
 
         .. versionadded:: 0.0.1
         """
+        if self._bounds is None:
+            self._bounds = AppKit.NSMakeRect(0, 0, image.size[0], image.size[1])
+
         ciimage = Quartz.CIImage.imageWithData_(image.data)
         self._cifilter.setValue_forKey_(ciimage, "inputImage")
 
         uncropped =  self._cifilter.valueForKey_(Quartz.kCIOutputImageKey)
 
         # Crop the result to the original image size
-        cropped = uncropped.imageByCroppingToRect_(Quartz.CGRectMake(0, 0, image.size[0], image.size[1]))
+        cropped = uncropped.imageByCroppingToRect_(self._bounds)
 
         # Convert back to NSImage
         rep = AppKit.NSCIImageRep.imageRepWithCIImage_(cropped)
-        result = AppKit.NSImage.alloc().initWithSize_(rep.size())
+        result = AppKit.NSImage.alloc().initWithSize_(image._nsimage.size())
         result.addRepresentation_(rep)
 
         image._nsimage = Image(result)._nsimage

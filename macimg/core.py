@@ -3,7 +3,7 @@ import os
 import tempfile
 import time
 
-from typing import Union, Self
+from typing import Union
 
 import AppKit
 import Quartz
@@ -13,7 +13,7 @@ workspace = None
 class Color:
     def __init__(self, *args):
         match args:
-            case list(args) if len(args) > 0:
+            case tuple(args) if len(args) > 0:
                 print("Hi")
 
         if len(args) == 0:
@@ -391,11 +391,12 @@ class Image:
                 self._nsimage = AppKit.NSImage.alloc().initWithContentsOfURL_(path)
 
             case str() as raw_string:
+                self.file = None
                 font = AppKit.NSFont.monospacedSystemFontOfSize_weight_(15, AppKit.NSFontWeightMedium)
                 text = AppKit.NSString.alloc().initWithString_(raw_string)
                 attributes = {
                     AppKit.NSFontAttributeName: font,
-                    AppKit.NSForegroundColorAttributeName: Color.black().xa_elem
+                    AppKit.NSForegroundColorAttributeName: Color.black()._nscolor
                 }
                 text_size = text.sizeWithAttributes_(attributes)
 
@@ -404,14 +405,14 @@ class Image:
                 text_rect = AppKit.NSMakeRect(10, 10, text_size.width, text_size.height)
 
                 # Overlay the text
-                swatch.xa_elem.lockFocus()                        
+                swatch._nsimage.lockFocus()                        
                 text.drawInRect_withAttributes_(text_rect, attributes)
-                swatch.xa_elem.unlockFocus()
-                self._nsimage = swatch.xa_elem
+                swatch._nsimage.unlockFocus()
+                self._nsimage = swatch._nsimage
 
             case Image() as image:
                 self.file = image.file
-                self._nsimage = image.xa_elem
+                self._nsimage = image._nsimage
 
             case AppKit.NSData() as data:
                 self.file = None
@@ -815,15 +816,16 @@ class Image:
             # No color provided -- use black by default
             font_color = Color.black()
 
+
         font = AppKit.NSFont.userFontOfSize_(font_size)
-        textRect = Quartz.CGRectMake(location[0], 0, self.size[0] - location[0], location[1])
+        textRect = Quartz.CGRectMake(location[0], 0, self.size[0] - location[0], self.size[1] - location[1])
         attributes = {
             AppKit.NSFontAttributeName: font,
-            AppKit.NSForegroundColorAttributeName: font_color.xa_elem
+            AppKit.NSForegroundColorAttributeName: font_color._nscolor
         }
 
         self._nsimage.lockFocus()
-        AppKit.NSString.alloc().initWithString_(text).drawInRect_withAttributes_(textRect, attributes)
+        AppKit.NSString.alloc().initWithString_(str(text)).drawInRect_withAttributes_(textRect, attributes)
         self._nsimage.unlockFocus()
         self.modified = True
         return self
