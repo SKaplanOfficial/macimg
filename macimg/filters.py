@@ -35,7 +35,7 @@ class Filter:
 
         # Convert back to NSImage
         rep = AppKit.NSCIImageRep.imageRepWithCIImage_(cropped)
-        result = AppKit.NSImage.alloc().initWithSize_(image._nsimage.size())
+        result = AppKit.NSImage.alloc().initWithSize_(rep.size())
         result.addRepresentation_(rep)
 
         image._nsimage = Image(result)._nsimage
@@ -133,16 +133,16 @@ class DepthOfField(Filter):
 
     .. versionadded:: 0.0.1
     """
-    def __init__(self, focal_region: Union[tuple[tuple[int, int], tuple[int, int]], None] = None, intensity: float = 10.0, focal_region_saturation: float = 1.5):
+    def __init__(self, focal_region: Union[tuple[tuple[int, int], tuple[int, int]], None] = None, intensity: float = 100.0, focal_region_saturation: float = 1.5):
         super().__init__("CIDepthOfField")
         self.focal_region = focal_region
         self.intensity = intensity
         self.focal_region_saturation = focal_region_saturation
 
-    def apply_to(self, image: Image) -> Image:
+    def apply_to(self, image: Image) -> Image:        
         if self.focal_region is None:
-            center_top = Quartz.CIVector.vectorWithX_Y_(image.size[0] / 2, image.size[1] / 3)
-            center_bottom = Quartz.CIVector.vectorWithX_Y_(image.size[0] / 2, image.size[1] / 3 * 2)
+            center_top = Quartz.CIVector.vectorWithX_Y_(image.size[0] / 3, image.size[1] / 2)
+            center_bottom = Quartz.CIVector.vectorWithX_Y_(image.size[0] * 3 / 2, image.size[1] / 2)
             self.focal_region = (center_top, center_bottom)
         elif isinstance(self.focal_region, tuple):
             point1 = Quartz.CIVector.vectorWithX_Y_(self.focal_region[0])
