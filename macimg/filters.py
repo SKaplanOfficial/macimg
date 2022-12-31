@@ -97,6 +97,30 @@ class Bloom(Filter):
         self._cifilter.setValue_forKey_(self.intensity, "inputIntensity")
         return super().apply_to(image)
 
+class BoxBlur(Filter):
+    """A blur effect that uses a box-shaped convolution kernel.
+
+    :param radius: The radius of pixels used to create the blur (higher values produce a greater blur effect), defaults to 10.0
+    :type radius: float
+
+    .. versionadded:: 0.0.2
+    """
+    def __init__(self, radius: float = 10.0):
+        super().__init__("CIBoxBlur")
+        self.radius = radius
+
+    def apply_to(self, image: Image) -> Image:
+        self._cifilter.setValue_forKey_(self.radius, "inputRadius")
+        return super().apply_to(image)
+
+class Chrome(Filter):
+    """A "Chrome" style effect filter.
+
+    .. versionadded:: 0.0.2
+    """
+    def __init__(self):
+        super().__init__("CIPhotoEffectChrome")
+
 class Comic(Filter):
     """Applies a comic filter to the image. Outlines edges and applies a color halftone effect.
 
@@ -155,6 +179,22 @@ class DepthOfField(Filter):
         self._cifilter.setValue_forKey_(self.focal_region_saturation, "inputSaturation")
         return super().apply_to(image)
 
+class DiscBlur(Filter):
+    """A blur effect that uses a disc-shaped convolution kernel.
+
+    :param radius: The radius of pixels used to create the blur (higher values produce a greater blur effect), defaults to 8.0
+    :type radius: float
+
+    .. versionadded:: 0.0.2
+    """
+    def __init__(self, radius: float = 8.0):
+        super().__init__("CIBoxBlur")
+        self.radius = radius
+
+    def apply_to(self, image: Image) -> Image:
+        self._cifilter.setValue_forKey_(self.radius, "inputRadius")
+        return super().apply_to(image)
+
 class Edges(Filter):
     """Detects the edges in the image and highlights them colorfully, blackening other areas of the image.
 
@@ -170,6 +210,14 @@ class Edges(Filter):
     def apply_to(self, image: Image) -> Image:
         self._cifilter.setValue_forKey_(self.intensity, "inputIntensity")
         return super().apply_to(image)
+
+class Fade(Filter):
+    """A "Fade" style effect filter.
+
+    .. versionadded:: 0.0.2
+    """
+    def __init__(self):
+        super().__init__("CIPhotoEffectFade")
 
 class GaussianBlur(Filter):
     """Blurs the image using a Gaussian filter.
@@ -187,6 +235,14 @@ class GaussianBlur(Filter):
         self._cifilter.setValue_forKey_(self.intensity, "inputRadius")
         return super().apply_to(image)
 
+class Instant(Filter):
+    """A "Instant" style effect filter.
+
+    .. versionadded:: 0.0.2
+    """
+    def __init__(self):
+        super().__init__("CIPhotoEffectInstant")
+
 class Invert(Filter):
     """Inverts the color of the image.
 
@@ -194,6 +250,22 @@ class Invert(Filter):
     """
     def __init__(self):
         super().__init__("CIColorInvert")
+
+class Median(Filter):
+    """A noise reduction effect that replaces pixel values with the median pixel value among their neighboring pixels.
+
+    .. versionadded:: 0.0.2
+    """
+    def __init__(self):
+        super().__init__("CIMedianFilter")
+
+class Mono(Filter):
+    """A "Mono" style effect filter.
+
+    .. versionadded:: 0.0.2
+    """
+    def __init__(self):
+        super().__init__("CIPhotoEffectMono")
 
 class Monochrome(Filter):
     """Remaps the colors of the image to shades of the specified color.
@@ -215,6 +287,34 @@ class Monochrome(Filter):
         self._cifilter.setValue_forKey_(cicolor, "inputColor")
         self._cifilter.setValue_forKey_(self.intensity, "inputIntensity")
         return super().apply_to(image)
+
+class MotionBlur(Filter):
+    """A blur effect which simulates a camera moving at a specified angle and image while capturing an image.
+
+    :param radius: The radius of pixels used to create the blur (higher values produce a greater blur effect), defaults to 20.0
+    :type radius: float, optional
+    :param angle: The angle of motion (determines the direction of blur), defaults to 0.0
+    :type angle: float, optional
+
+    .. versionadded:: 0.0.2
+    """
+    def __init__(self, radius: float = 20.0, angle: float = 0.0):
+        super().__init__("CIMotionBlur")
+        self.radius = radius
+        self.angle = angle
+
+    def apply_to(self, image: Image) -> Image:
+        self._cifilter.setValue_forKey_(self.radius, "inputRadius")
+        self._cifilter.setValue_forKey_(self.angle, "inputAngle")
+        return super().apply_to(image)
+
+class Noir(Filter):
+    """A "Noir" style effect filter.
+
+    .. versionadded:: 0.0.2
+    """
+    def __init__(self):
+        super().__init__("CIPhotoEffectNoir")
 
 class NoiseReduction(Filter):
     """Reduces noise in the image by sharpening areas with a luminance delta below the specified noise level threshold.
@@ -284,6 +384,14 @@ class Pointillize(Filter):
         self._cifilter.setValue_forKey_(self.point_size, "inputRadius")
         return super().apply_to(image)
 
+class Process(Filter):
+    """A "Process" style effect filter.
+
+    .. versionadded:: 0.0.2
+    """
+    def __init__(self):
+        super().__init__("CIPhotoEffectProcess")
+
 class Sepia(Filter):
     """Applies a sepia filter to the image; maps all colors of the image to shades of brown.
 
@@ -300,6 +408,30 @@ class Sepia(Filter):
         self._cifilter.setValue_forKey_(self.intensity, "inputIntensity")
         return super().apply_to(image)
 
+class Thermal(Filter):
+    """A "Thermal" style effect filter.
+
+    .. versionadded:: 0.0.2
+    """
+    def __init__(self):
+        super().__init__("CIThermal")
+
+class Tonal(Filter):
+    """A "Tonal" style effect filter.
+
+    .. versionadded:: 0.0.2
+    """
+    def __init__(self):
+        super().__init__("CIPhotoEffectTonal")
+
+class Transfer(Filter):
+    """A "Transfer" style effect filter.
+
+    .. versionadded:: 0.0.2
+    """
+    def __init__(self):
+        super().__init__("CIPhotoEffectTransfer")
+
 class Vignette(Filter):
     """Applies vignette shading to the corners of the image.
 
@@ -315,3 +447,36 @@ class Vignette(Filter):
     def apply_to(self, image: Image) -> Image:
         self._cifilter.setValue_forKey_(self.intensity, "inputIntensity")
         return super().apply_to(image)
+
+class ZoomBlur(Filter):
+    """A blur effect which simulates zooming a camera while capturing an image.
+
+    :param amount: The radius of pixels used to create the blur (higher values produce a greater blur effect), defaults to 20.0
+    :type amount: float, optional
+    :param center: The center point of the effect, or None to use the center of the image, defaults to None
+    :type center: Union[tuple[int, int], None], optional
+
+    .. versionadded:: 0.0.2
+    """
+    def __init__(self, amount: float = 20.0, center: Union[tuple[int, int], None] = None):
+        super().__init__("CIMotionBlur")
+        self.amount = amount
+        self.center = center
+
+    def apply_to(self, image: Image) -> Image:
+        if self.center is None:
+            self.center = Quartz.CIVector.vectorWithX_Y_(image.size[0] / 2, image.size[1] / 2)
+        else:
+            self.center = Quartz.CIVector.vectorWithX_Y_(self.center[0], self.center[1])
+
+        self._cifilter.setValue_forKey_(self.amount, "inputAmount")
+        self._cifilter.setValue_forKey_(self.center, "inputCenter")
+        return super().apply_to(image)
+
+class XRay(Filter):
+    """An X-Ray style effect filter.
+
+    .. versionadded:: 0.0.2
+    """
+    def __init__(self):
+        super().__init__("CIXRay")
