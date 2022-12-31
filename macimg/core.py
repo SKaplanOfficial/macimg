@@ -18,13 +18,13 @@ class Color:
 
         if len(args) == 0:
             # No color specified -- default to white
-            self._nscolor = Color.white_color().xa_elem
+            self._nscolor = Color.white_color()._nscolor
         elif len(args) == 1 and isinstance(args[0], AppKit.NSColor):
             # Initialize copy of non-mutable NSColor object
             self.copy_color(args[0])
         elif len(args) == 1 and isinstance(args[0], Color):
             # Initialize copy of another Color object
-            self.copy_color(args[0].xa_elem)
+            self.copy_color(args[0]._nscolor)
         else:
             # Initialize from provided RGBA values
             red = args[0] if len(args) >= 0 else 255
@@ -284,7 +284,7 @@ class Color:
 
         .. versionadded:: 0.1.0
         """
-        new_color = self._nscolor.blendedColorWithFraction_ofColor_(fraction, color.xa_elem)
+        new_color = self._nscolor.blendedColorWithFraction_ofColor_(fraction, color._nscolor)
         return Color(new_color.redComponent(), new_color.greenComponent(), new_color.blueComponent(), new_color.alphaComponent())
 
     def brighten(self, fraction: float = 0.5) -> 'Color':
@@ -592,7 +592,7 @@ class Image:
     @white_point.setter
     def white_point(self, white_point: Color):
         self.__white_point = white_point
-        ci_white_point = Quartz.CIColor.alloc().initWithColor_(white_point.xa_elem)
+        ci_white_point = Quartz.CIColor.alloc().initWithColor_(white_point._nscolor)
         image = Quartz.CIImage.imageWithData_(self.data)
         filter = Quartz.CIFilter.filterWithName_("CIWhitePointAdjust")
         filter.setDefaults()
@@ -682,7 +682,7 @@ class Image:
             font_color = Color.black()
         attributes = {
             AppKit.NSFontAttributeName: font,
-            AppKit.NSForegroundColorAttributeName: font_color.xa_elem
+            AppKit.NSForegroundColorAttributeName: font_color._nscolor
         }
         text_size = text.sizeWithAttributes_(attributes)
 
@@ -693,36 +693,10 @@ class Image:
         text_rect = AppKit.NSMakeRect(inset, inset, text_size.width, text_size.height)
 
         # Overlay the text
-        swatch.xa_elem.lockFocus()                        
+        swatch._nsimage.lockFocus()                        
         text.drawInRect_withAttributes_(text_rect, attributes)
-        swatch.xa_elem.unlockFocus()
+        swatch._nsimage.unlockFocus()
         return swatch
-
-    def crop(self, size: tuple[int, int], corner: Union[tuple[int, int], None] = None) -> 'Image':
-        """Crops the image to the specified dimensions.
-
-        :param size: The width and height of the resulting image
-        :type size: tuple[int, int]
-        :param corner: The bottom-left corner location from which to crop the image, or None to use (0, 0), defaults to None
-        :type corner: Union[tuple[int, int], None]
-        :return: The image object, modifications included
-        :rtype: Image
-
-        .. versionadded:: 0.1.0
-        """
-        if corner is None:
-            # No corner provided -- use (0,0) by default
-            corner = (0, 0)
-
-        cropped_image = AppKit.NSImage.alloc().initWithSize_(AppKit.NSMakeSize(size[0], size[1]))
-        imageBounds = AppKit.NSMakeRect(corner[0], corner[1], self.size[0], self.size[1])
-
-        cropped_image.lockFocus()
-        self._nsimage.drawInRect_(imageBounds)
-        cropped_image.unlockFocus()
-        self._nsimage = cropped_image
-        self.modified = True
-        return self
 
     def pad(self, horizontal_border_width: int = 50, vertical_border_width: int = 50, pad_color: Union[Color, None] = None) -> 'Image':
         """Pads the image with the specified color; adds a border around the image with the specified vertical and horizontal width.
@@ -746,11 +720,11 @@ class Image:
         new_height = self.size[1] + vertical_border_width * 2
         color_swatch = pad_color.make_swatch(new_width, new_height)
 
-        color_swatch.xa_elem.lockFocus()
+        color_swatch._nsimage.lockFocus()
         bounds = AppKit.NSMakeRect(horizontal_border_width, vertical_border_width, self.size[0], self.size[1])
         self._nsimage.drawInRect_(bounds)
-        color_swatch.xa_elem.unlockFocus()
-        self._nsimage = color_swatch.xa_elem
+        color_swatch._nsimage.unlockFocus()
+        self._nsimage = color_swatch._nsimage
         self.modified = True
         return self
 
@@ -787,10 +761,10 @@ class Image:
 
         self._nsimage.lockFocus()
         bounds = AppKit.NSMakeRect(location[0], location[1], size[0], size[1])
-        image.xa_elem.drawInRect_(bounds)
+        image._nsimage.drawInRect_(bounds)
         self._nsimage.unlockFocus()
         self.modified = True
-        return self._nsimage
+        return self
 
     def overlay_text(self, text: str, location: Union[tuple[int, int], None] = None, font_size: float = 12, font_color: Union[Color, None] = None) -> 'Image':
         """Overlays text of the specified size and color at the provided location within the image.
@@ -903,4 +877,4 @@ class Image:
         fm.createFileAtPath_contents_attributes_(file_path, self._nsimage.TIFFRepresentation(), None)
 
     def __eq__(self, other):
-        return isinstance(other, Image) and self._nsimage.TIFFRepresentation() == other.xa_elem.TIFFRepresentation()
+        return isinstance(other, Image) and self._nsimage.TIFFRepresentation() == other._nsimage.TIFFRepresentation()

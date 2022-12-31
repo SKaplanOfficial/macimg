@@ -39,7 +39,34 @@ class Transform:
         image.modified = True
         return image
 
+class Crop(Transform):
+    """Crops an image to the specified dimensions.
+
+    :param size: The width and height of the resulting image
+    :type size: tuple[int, int]
+    :param corner: The bottom-left corner location from which to crop the image, or None to use (0, 0), defaults to None
+    :type corner: Union[tuple[int, int], None]
+
+    .. versionadded:: 0.0.2
+    """
+    def __init__(self, size: tuple[int, int], corner: Union[tuple[int, int], None] = None):
+        super().__init__()
+        self.size = size
+        self.corner = corner
+
+    def apply_to(self, image: Image):
+        self._size = AppKit.NSMakeSize(*self.size)
+        self._bounds = AppKit.NSMakeRect(self.corner[0], self.corner[1], self.size[0], self.size[1])
+        return super().apply_to(image)
+
 class Flip(Transform):
+    """Flips an image horizontally or vertically.
+
+    :param direction: The direction to flip the image
+    :type direction: Literal["horizontal", "vertical"]
+
+    .. versionadded:: 0.0.2
+    """
     def __init__(self, direction: Literal["horizontal", "vertical"]):
         super().__init__()
         self.direction = direction
@@ -57,7 +84,7 @@ class Flip(Transform):
         return super().apply_to(image)
 
 class Rotate(Transform):
-    """Rotates the image clockwise by the specified number of degrees.
+    """Rotates an image clockwise by the specified number of degrees.
 
     :param degrees: The number of degrees to rotate the image by
     :type degrees: float
@@ -84,7 +111,7 @@ class Rotate(Transform):
         return super().apply_to(image)
 
 class Scale(Transform):
-    """Scales the image by the specified horizontal and vertical factors.
+    """Scales an image by the specified horizontal and vertical factors.
 
     :param scale_factor_x: The factor by which to scale the image in the X dimension
     :type scale_factor_x: float
@@ -107,7 +134,7 @@ class Scale(Transform):
         return super().apply_to(image)
 
 class Resize(Transform):
-    """Resizes the image to the specified width and height.
+    """Resizes an image to the specified width and height.
 
     :param width: The width of the resulting image, in pixels
     :type width: int
