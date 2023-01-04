@@ -44,91 +44,91 @@ class Color:
     def red() -> 'Color':
         """Initializes and returns a pure red :class:`Color` object.
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         return Color(65535, 0, 0)
 
     def orange() -> 'Color':
         """Initializes and returns an :class:`Color` object whose RGB values are (1.0, 0.5, 0.0).
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         return Color(AppKit.NSColor.orangeColor())
 
     def yellow() -> 'Color':
         """Initializes and returns an :class:`Color` object whose RGB values are (1.0, 1.0, 0.0).
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         return Color(AppKit.NSColor.yellowColor())
 
     def green() -> 'Color':
         """Initializes and returns a pure green :class:`Color` object.
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         return Color(0, 65535, 0)
 
     def cyan() -> 'Color':
         """Initializes and returns an :class:`Color` object whose RGB values are (0.0, 1.0, 1.0).
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         return Color(AppKit.NSColor.cyanColor())
 
     def blue() -> 'Color':
         """Initializes and returns a pure blue :class:`Color` object.
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         return Color(0, 0, 65535)
 
     def magenta() -> 'Color':
         """Initializes and returns an :class:`Color` object whose RGB values are (1.0, 0.0, 1.0).
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         return Color(AppKit.NSColor.magentaColor())
 
     def purple() -> 'Color':
         """Initializes and returns an :class:`Color` object whose RGB values are (0.5, 0.0, 0.5).
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         return Color(AppKit.NSColor.purpleColor())
 
     def brown() -> 'Color':
         """Initializes and returns an :class:`Color` object whose RGB values are (0.6, 0.4, 0.2).
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         return Color(AppKit.NSColor.brownColor())
 
     def white() -> 'Color':
         """Initializes and returns a pure white :class:`Color` object.
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         return Color(65535, 65535, 65535)
 
     def gray() -> 'Color':
         """Initializes and returns an :class:`Color` object whose RGB values are (0.5, 0.5, 0.5).
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         return Color(0.5, 0.5, 0.5)
 
     def black() -> 'Color':
         """Initializes and returns a pure black :class:`Color` object.
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         return Color(0, 0, 0)
 
     def clear() -> 'Color':
         """Initializes and returns a an :class:`Color` object whose alpha value is 0.0.
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         return Color(0, 0, 0, 0)
 
@@ -144,7 +144,7 @@ class Color:
     def red_value(self) -> float:
         """The red value of the color on the scale of 0.0 to 1.0.
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         return self._nscolor.redComponent()
 
@@ -156,7 +156,7 @@ class Color:
     def green_value(self) -> float:
         """The green value of the color on the scale of 0.0 to 1.0.
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         return self._nscolor.greenComponent()
 
@@ -168,7 +168,7 @@ class Color:
     def blue_value(self) -> float:
         """The blue value of the color on the scale of 0.0 to 1.0.
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         return self._nscolor.blueComponent()
 
@@ -180,7 +180,7 @@ class Color:
     def alpha_value(self) -> float:
         """The alpha value of the color on the scale of 0.0 to 1.0.
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         return self._nscolor.alphaComponent()
 
@@ -192,7 +192,7 @@ class Color:
     def hue_value(self):
         """The hue value of the color on the scale of 0.0 to 1.0.
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         return self._nscolor.hueComponent()
 
@@ -204,7 +204,7 @@ class Color:
     def saturation_value(self):
         """The staturation value of the color on the scale of 0.0 to 1.0.
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         return self._nscolor.saturationComponent()
 
@@ -216,7 +216,7 @@ class Color:
     def brightness_value(self):
         """The brightness value of the color on the scale of 0.0 to 1.0.
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         return self._nscolor.brightnessComponent()
 
@@ -238,7 +238,7 @@ class Color:
         :return: The Color object
         :rtype: Color
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         self._nscolor = AppKit.NSCalibratedRGBColor.alloc().initWithRed_green_blue_alpha_(red, green, blue, alpha)
         return self
@@ -257,7 +257,7 @@ class Color:
         :return: The Color object
         :rtype: Color
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         self._nscolor = AppKit.NSCalibratedRGBColor.initWithHue_saturation_brightness_alpha_(hue, saturation, brightness, alpha)
         return self
@@ -272,7 +272,7 @@ class Color:
         :return: The resulting color after mixing
         :rtype: Color
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         new_color = self._nscolor.blendedColorWithFraction_ofColor_(fraction, color._nscolor)
         return Color(new_color.redComponent(), new_color.greenComponent(), new_color.blueComponent(), new_color.alphaComponent())
@@ -285,7 +285,7 @@ class Color:
         :return: The resulting color after brightening
         :rtype: Color
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         self._nscolor = self._nscolor.highlightWithLevel_(fraction)
         return self
@@ -298,7 +298,7 @@ class Color:
         :return: The resulting color after darkening
         :rtype: Color
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         self._nscolor = self._nscolor.shadowWithLevel_(fraction)
         return self
@@ -331,7 +331,7 @@ class Color:
         >>>     swatch.show_in_preview()
         >>>     sleep(0.2)
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         img = AppKit.NSImage.alloc().initWithSize_(AppKit.NSMakeSize(width, height))
         img.lockFocus()
@@ -346,7 +346,7 @@ class Color:
 class Image:
     """Wrapper around NSImage.
 
-    .. versionadded:: 0.0.2
+    .. versionadded:: 0.0.1
     """
 
     def __init__(self, image_reference: str):
@@ -433,7 +433,7 @@ class Image:
     def size(self) -> tuple[int, int]:
         """The dimensions of the image, in pixels.
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         return tuple(self._nsimage.size())
 
@@ -441,7 +441,7 @@ class Image:
     def data(self) -> 'AppKit.NSData':
         """The TIFF representation of the image
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         return self._nsimage.TIFFRepresentation()
 
@@ -449,7 +449,7 @@ class Image:
     def has_alpha_channel(self) -> bool:
         """Whether the image has an alpha channel or not.
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         reps = self._nsimage.representations()
         if len(reps) > 0:
@@ -461,7 +461,7 @@ class Image:
     def is_opaque(self) -> bool:
         """Whether the image contains transparent pixels or not.
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         reps = self._nsimage.representations()
         if len(reps) > 0:
@@ -473,7 +473,7 @@ class Image:
     def color_space_name(self) -> Union[str, None]:
         """The name of the color space that the image currently uses.
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         reps = self._nsimage.representations()
         if len(reps) > 0:
@@ -485,7 +485,7 @@ class Image:
     def gamma(self) -> float:
         """The gamma value for the image, once it has been manually set. Otherwise, the value is None.
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         if self.__gamma is not None:
             return self.__gamma
@@ -506,7 +506,7 @@ class Image:
     def vibrance(self) -> Union[float, None]:
         """The vibrance value for the image, once it has been manually set. Otherwise, the value is None.
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         if self.__vibrance is not None:
             return self.__vibrance
@@ -527,7 +527,7 @@ class Image:
     def tint(self) -> Union[float, None]:
         """The tint setting for the image, once it has been manually set. Otherwise, the value is None.
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         if self.__tint is not None:
             return self.__tint
@@ -550,7 +550,7 @@ class Image:
     def temperature(self) -> Union[float, None]:
         """The temperature setting for the image, once it has been manually set. Otherwise, the value is None.
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         if self.__temperature is not None:
             return self.__temperature
@@ -573,7 +573,7 @@ class Image:
     def white_point(self) -> Union['Color', None]:
         """The white point setting for the image, once it has been manually set. Otherwise, the value is None.
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         if self.__white_point is not None:
             return self.__white_point
@@ -595,7 +595,7 @@ class Image:
     def highlight(self) -> float:
         """The highlight setting for the image, once it has been manually set. Otherwise, the value is None.
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         if self.__highlight is not None:
             return self.__highlight
@@ -616,7 +616,7 @@ class Image:
     def shadow(self) -> float:
         """The shadow setting for the image, once it has been manually set. Otherwise, the value is None.
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         if self.__shadow is not None:
             return self.__shadow
@@ -664,7 +664,7 @@ class Image:
         :return: Image
         :rtype: The resulting image object
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         font = AppKit.NSFont.fontWithName_size_(font_name, font_size)
         text = AppKit.NSString.alloc().initWithString_(text)
@@ -700,7 +700,7 @@ class Image:
         :return: The image object, modifications included
         :rtype: Image
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         if pad_color is None:
             # No color provided -- use white by default
@@ -730,7 +730,7 @@ class Image:
         :return: The image object, modifications included
         :rtype: Image
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         if location is None:
             # No location provided -- use the bottom-left point of the background image by default
@@ -770,7 +770,7 @@ class Image:
         :return: The image object, modifications included
         :rtype: Image
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         if location is None:
             # No location provided -- use (5, 5) by default
@@ -807,7 +807,7 @@ class Image:
         >>> print(test.extract_text())
         ["HERE'S TO THE", 'CRAZY ONES', 'the MISFITS the REBELS', 'THE TROUBLEMAKERS', ...]
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         # Prepare CGImage
         ci_image = Quartz.CIImage.imageWithData_(self.data)
@@ -832,7 +832,7 @@ class Image:
     def show_in_preview(self):
         """Opens the image in preview.
 
-        .. versionadded:: 0.0.8
+        .. versionadded:: 0.0.1
         """
         global workspace
         if workspace is None:
@@ -859,7 +859,7 @@ class Image:
         :param file_path: The path at which to save the image file. Any existing file at that location will be overwritten, defaults to None
         :type file_path: Union[XAPath, str, None]
 
-        .. versionadded:: 0.1.0
+        .. versionadded:: 0.0.1
         """
         if file_path is None and self.file is not None:
             file_path = self.file.path

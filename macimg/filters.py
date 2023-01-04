@@ -98,7 +98,7 @@ class Bloom(Filter):
         return super().apply_to(image)
 
 class BokehBlur(Filter):
-    """Applies a bloom effect to the image. Softens edges and adds a glow.
+    """Applies a bokeh effect to the image.
 
     :param radius: The radius of pixels used to create the blur (higher values produce a greater blur effect), defaults to 10.0
     :type radius: float, optional
