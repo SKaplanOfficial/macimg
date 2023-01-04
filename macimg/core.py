@@ -1,4 +1,3 @@
-import math
 import os
 import tempfile
 import time
@@ -12,24 +11,33 @@ workspace = None
 
 class Color:
     def __init__(self, *args):
-        match args:
-            case tuple(args) if len(args) > 0:
-                print("Hi")
-
         if len(args) == 0:
             # No color specified -- default to white
-            self._nscolor = Color.white_color()._nscolor
-        elif len(args) == 1 and isinstance(args[0], AppKit.NSColor):
-            # Initialize copy of non-mutable NSColor object
-            self.copy_color(args[0])
-        elif len(args) == 1 and isinstance(args[0], Color):
-            # Initialize copy of another Color object
-            self.copy_color(args[0]._nscolor)
-        else:
-            # Initialize from provided RGBA values
-            red = args[0] if len(args) >= 0 else 255
-            green = args[1] if len(args) >= 1 else 255
-            blue = args[2] if len(args) >= 3 else 255
+            self._nscolor = Color.white()._nscolor
+            
+        elif isinstance(args[0], AppKit.NSColor):
+            # Create copy of non-mutable NSColor
+            self._nscolor = AppKit.NSCalibratedRGBColor.alloc().initWithRed_green_blue_alpha_(
+                args[0].redComponent(),
+                args[0].greenComponent(),
+                args[0].blueComponent(),
+                args[0].alphaComponent()
+            )
+
+        elif isinstance(args[0], Color):
+            # Create copy of another Color object
+            self._nscolor = AppKit.NSCalibratedRGBColor.alloc().initWithRed_green_blue_alpha_(
+                args[0]._nscolor.redComponent(),
+                args[0]._nscolor.greenComponent(),
+                args[0]._nscolor.blueComponent(),
+                args[0]._nscolor.alphaComponent()
+            )
+
+        elif len(args) <= 4 and all([float(x) for x in args]):
+            # Create color from provided RGBA values
+            red = args[0] if len(args) > 0 else 0
+            green = args[1] if len(args) > 1 else 0
+            blue = args[2] if len(args) > 3 else 0
             alpha = args[3] if len(args) == 4 else 1.0
             self._nscolor = AppKit.NSCalibratedRGBColor.alloc().initWithRed_green_blue_alpha_(red, green, blue, alpha)
 
@@ -215,24 +223,6 @@ class Color:
     @brightness_value.setter
     def brightness_value(self, brightness_value: float):
         self._nscolor = AppKit.NSCalibratedRGBColor.initWithHue_saturation_brightness_alpha_(self.hue_value, self.saturation_value, brightness_value, self.alpha_value)
-
-    def copy_color(self, color: 'AppKit.NSColor') -> 'Color':
-        """Initializes a Color copy of an NSColor object.
-
-        :param color: The NSColor to copy
-        :type color: AppKit.NSColor
-        :return: The newly created Color object
-        :rtype: Color
-
-        .. versionadded:: 0.1.0
-        """
-        self._nscolor = AppKit.NSCalibratedRGBColor.alloc().initWithRed_green_blue_alpha_(
-            color.redComponent(),
-            color.greenComponent(),
-            color.blueComponent(),
-            color.alphaComponent()
-        )
-        return self
     
     def set_rgba(self, red: float, green: float, blue: float, alpha: float) -> 'Color':
         """Sets the RGBA values of the color.
@@ -320,8 +310,8 @@ class Color:
         :type width: int, optional
         :param height: The height of the swatch image, in pixels, defaults to 100
         :type height: int, optional
-        :return: The image swatch as an XAImage object
-        :rtype: XAImage
+        :return: The image swatch as an Image object
+        :rtype: Image
 
         :Example: View swatches in Preview
 

@@ -4,7 +4,7 @@ import math
 import AppKit
 import Quartz
 
-from .core import Color, Image
+from .core import Image
 
 class Transform:
     def __init__(self):

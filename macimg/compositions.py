@@ -1,10 +1,7 @@
-from typing import Union, Literal
-import math
-
+from typing import Union
 import AppKit
-import Quartz
 
-from .core import Color, Image
+from .core import Image
 
 class Composition:
     """The parent class of all composition objects.
