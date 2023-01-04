@@ -97,6 +97,34 @@ class Bloom(Filter):
         self._cifilter.setValue_forKey_(self.intensity, "inputIntensity")
         return super().apply_to(image)
 
+class BokehBlur(Filter):
+    """Applies a bloom effect to the image. Softens edges and adds a glow.
+
+    :param radius: The radius of pixels used to create the blur (higher values produce a greater blur effect), defaults to 10.0
+    :type radius: float, optional
+    :param ring_amount: The amount of emphasis on the edges of bokeh rings, defaults to 0.5
+    :type ring_amount: float, optional
+    :param ring_size: The size of bokeh rings, defaults to 5.0
+    :type ring_size: float, optional
+    :param softness: The strength of the smoothing effect over the generated boken rings, defaults to 0.0
+    :type softness: float, optional
+
+    .. versionadded:: 0.0.1
+    """
+    def __init__(self, radius: float = 10.0, ring_amount: float = 0.5, ring_size: float = 5.0, softness: float = 0.0):
+        super().__init__("CIBokehBlur")
+        self.radius = radius
+        self.ring_amount = ring_amount
+        self.ring_size = ring_size
+        self.softness = softness
+
+    def apply_to(self, image: Image) -> Image:
+        self._cifilter.setValue_forKey_(self.radius, "inputRadius")
+        self._cifilter.setValue_forKey_(self.ring_amount, "inputRingAmount")
+        self._cifilter.setValue_forKey_(self.ring_size, "inputRingSize")
+        self._cifilter.setValue_forKey_(self.softness, "inputSoftness")
+        return super().apply_to(image)
+
 class BoxBlur(Filter):
     """A blur effect that uses a box-shaped convolution kernel.
 
@@ -128,6 +156,22 @@ class Comic(Filter):
     """
     def __init__(self):
         super().__init__("CIComicEffect")
+
+class Convolution(Filter):
+    """Applies a bloom effect to the image. Softens edges and adds a glow.
+
+    :param intensity: The strength of the softening and glow effects, defaults to 0.5
+    :type intensity: float
+
+    .. versionadded:: 0.0.1
+    """
+    def __init__(self, matrix_dimensions: tuple[int, int]):
+        super().__init__("CIBloom")
+        self.intensity = intensity
+
+    def apply_to(self, image: Image) -> Image:
+        self._cifilter.setValue_forKey_(self.intensity, "inputIntensity")
+        return super().apply_to(image)
 
 class Crystallize(Filter):
     """Applies a crystallization filter to the image. Creates polygon-shaped color blocks by aggregating pixel values.
@@ -211,6 +255,22 @@ class Edges(Filter):
         self._cifilter.setValue_forKey_(self.intensity, "inputIntensity")
         return super().apply_to(image)
 
+class EdgeWork(Filter):
+    """A filter which produces a stylized black-and-white rendition of an image that looks similar to a woodblock cutout.
+
+    :param radius: The thickness of the edges, defaults to 3.0
+    :type radius: float, optional
+
+    .. versionadded:: 0.0.1
+    """
+    def __init__(self, radius: float = 3.0):
+        super().__init__("CIEdgeWork")
+        self.radius = radius
+
+    def apply_to(self, image: Image) -> Image:
+        self._cifilter.setValue_forKey_(self.radius, "inputRadius")
+        return super().apply_to(image)
+
 class Fade(Filter):
     """A "Fade" style effect filter.
 
@@ -235,6 +295,51 @@ class GaussianBlur(Filter):
         self._cifilter.setValue_forKey_(self.intensity, "inputRadius")
         return super().apply_to(image)
 
+class Gloom(Filter):
+    """A filter which fulls the highlights of an image.
+
+    :param intensity: The strength of the dulling effect, defaults to 0.5
+    :type intensity: float
+    :param radius: The radius of pixels to use in creating the effect (higher values produce a greater gloom-blur effect), defaults to 10.0
+    :type radius: float
+
+    .. versionadded:: 0.0.2
+    """
+    def __init__(self, intensity: float = 0.5, radius: float = 10.0):
+        super().__init__("CIGloom")
+        self.intensity = intensity
+        self.radius = radius
+
+    def apply_to(self, image: Image) -> Image:
+        self._cifilter.setValue_forKey_(self.intensity, "inputIntensity")
+        self._cifilter.setValue_forKey_(self.radius, "inputRadius")
+        return super().apply_to(image)
+
+class HexagonalPixellate(Filter):
+    """A filter which pixellates an image by rendering areas as hexagons whose color is an average of the area's pixels.
+
+    :param pixel_size: The size of the pixels, defaults to 8.0
+    :type pixel_size: float
+    :param center: The center point of the hexagon from which the effect originates, or None to use the center of the image, defaults to None
+    :type center: Union[tuple[int, int], None], optional
+
+    .. versionadded:: 0.0.2
+    """
+    def __init__(self, pixel_size: float = 8.0, center: Union[tuple[int, int], None] = None):
+        super().__init__("CIHexagonalPixellate")
+        self.pixel_size = pixel_size
+        self.center = center
+
+    def apply_to(self, image: Image) -> Image:
+        if self.center is None:
+            self.center = Quartz.CIVector.vectorWithX_Y_(image.size[0] / 2, image.size[1] / 2)
+        else:
+            self.center = Quartz.CIVector.vectorWithX_Y_(self.center[0], self.center[1])
+
+        self._cifilter.setValue_forKey_(self.pixel_size, "inputScale")
+        self._cifilter.setValue_forKey_(self.center, "inputCenter")
+        return super().apply_to(image)
+
 class Instant(Filter):
     """A "Instant" style effect filter.
 
@@ -250,6 +355,26 @@ class Invert(Filter):
     """
     def __init__(self):
         super().__init__("CIColorInvert")
+
+class LineOverlay(Filter):
+    """A filter which produces a stylized black-and-white rendition of an image that looks similar to a woodblock cutout.
+
+    :param radius: The thickness of the edges, defaults to 3.0
+    :type radius: float, optional
+
+    .. versionadded:: 0.0.1
+    """
+    def __init__(self, noise_level: float = 0.07, sharpness: float = 0.71, edge_intensity: float = 1.00, threshold: float = 1.0, contrast: float = 50.0):
+        super().__init__("CILineOverlay")
+        self.noise_level = noise_level
+        self.edge_intensity = edge_intensity
+        self.threshold = threshold
+        self.contrast = contrast
+
+    def apply_to(self, image: Image) -> Image:
+        self._cifilter.setValue_forKey_(self.noise_level, "inputNRNoiseLevel")
+        self._cifilter.setValue_forKey_(self.threshold, "inputThreshold")
+        return super().apply_to(image)
 
 class Median(Filter):
     """A noise reduction effect that replaces pixel values with the median pixel value among their neighboring pixels.
