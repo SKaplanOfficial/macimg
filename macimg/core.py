@@ -33,11 +33,11 @@ class Color:
                 args[0]._nscolor.alphaComponent()
             )
 
-        elif len(args) <= 4 and all([float(x) for x in args]):
+        elif len(args) <= 4 and all([isinstance(x, int) or isinstance(x, float) for x in args]):
             # Create color from provided RGBA values
             red = args[0] if len(args) > 0 else 0
             green = args[1] if len(args) > 1 else 0
-            blue = args[2] if len(args) > 3 else 0
+            blue = args[2] if len(args) > 2 else 0
             alpha = args[3] if len(args) == 4 else 1.0
             self._nscolor = AppKit.NSCalibratedRGBColor.alloc().initWithRed_green_blue_alpha_(red, green, blue, alpha)
 
@@ -109,7 +109,7 @@ class Color:
 
         .. versionadded:: 0.0.1
         """
-        return Color(65535, 65535, 65535)
+        return Color(255, 255, 255)
 
     def gray() -> 'Color':
         """Initializes and returns an :class:`Color` object whose RGB values are (0.5, 0.5, 0.5).
@@ -123,7 +123,7 @@ class Color:
 
         .. versionadded:: 0.0.1
         """
-        return Color(0, 0, 0)
+        return Color(0.0, 0.0, 0.0)
 
     def clear() -> 'Color':
         """Initializes and returns a an :class:`Color` object whose alpha value is 0.0.
