@@ -46,7 +46,7 @@ class Color:
 
         .. versionadded:: 0.0.1
         """
-        return Color(65535, 0, 0)
+        return Color(1, 0, 0)
 
     def orange() -> 'Color':
         """Initializes and returns an :class:`Color` object whose RGB values are (1.0, 0.5, 0.0).
@@ -67,7 +67,7 @@ class Color:
 
         .. versionadded:: 0.0.1
         """
-        return Color(0, 65535, 0)
+        return Color(0, 1, 0)
 
     def cyan() -> 'Color':
         """Initializes and returns an :class:`Color` object whose RGB values are (0.0, 1.0, 1.0).
@@ -81,7 +81,7 @@ class Color:
 
         .. versionadded:: 0.0.1
         """
-        return Color(0, 0, 65535)
+        return Color(0, 0, 1)
 
     def magenta() -> 'Color':
         """Initializes and returns an :class:`Color` object whose RGB values are (1.0, 0.0, 1.0).
@@ -109,7 +109,7 @@ class Color:
 
         .. versionadded:: 0.0.1
         """
-        return Color(255, 255, 255)
+        return Color(1, 1, 1)
 
     def gray() -> 'Color':
         """Initializes and returns an :class:`Color` object whose RGB values are (0.5, 0.5, 0.5).

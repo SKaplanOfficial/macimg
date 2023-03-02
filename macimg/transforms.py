@@ -44,12 +44,12 @@ class Crop(Transform):
 
     :param size: The width and height of the resulting image
     :type size: tuple[int, int]
-    :param corner: The bottom-left corner location from which to crop the image, or None to use (0, 0), defaults to None
-    :type corner: Union[tuple[int, int], None]
+    :param corner: The bottom-left corner location from which to crop the image, defaults to (0, 0)
+    :type corner: tuple[int, int], optional
 
     .. versionadded:: 0.0.2
     """
-    def __init__(self, size: tuple[int, int], corner: Union[tuple[int, int], None] = None):
+    def __init__(self, size: tuple[int, int], corner: tuple[int, int] = (0, 0)):
         super().__init__()
         self.size = size
         self.corner = corner
