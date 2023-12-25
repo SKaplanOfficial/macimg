@@ -1,5 +1,5 @@
 # macimg
-A Python package for manipulating images using Objective-C frameworks.
+A Python package for manipulating images using Objective-C frameworks. Only works on macOS as it requires the Objective-C runtime.
 
 # Examples
 
