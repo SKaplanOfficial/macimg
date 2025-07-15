@@ -1,3 +1,48 @@
 [build-system]
-requires = ["setuptools>=42"]
+requires = ["setuptools>=77.0.3"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "macimg"
+description = "A package for manipulating images using Objective-C frameworks"
+version = "0.0.4"
+requires-python = ">=3.10"
+dependencies = [
+    "pyobjc-core~=11.1",
+    "pyobjc-framework-Quartz~=11.1",
+]
+authors = [
+  {name = "Stephen Kaplan", email="stephen@mac-nerd.org"},
+]
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+keywords = ["image", "processing", "mac", "native"]
+classifiers = [
+  "Environment :: MacOS X :: Cocoa",
+  "Environment :: MacOS X",
+  "Intended Audience :: Developers",
+  "Intended Audience :: End Users/Desktop",
+  "Natural Language :: English",
+  "Operating System :: MacOS",
+  "Programming Language :: Objective C",
+  "Programming Language :: Other Scripting Engines????",
+  "Programming Language :: Other",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3",
+  "Topic :: Multimedia :: Graphics",
+  "Topic :: Scientific/Engineering :: Image Processing",
+  "Topic :: Utilities",
+]
+
+[project.urls]
+Homepage = "https://github.com/SKaplanOfficial/macimg"
+Repository = "https://github.com/SKaplanOfficial/macimg.git"
+Issues = "https://github.com/SKaplanOfficial/macimg/issues"
+Changelog = "https://github.com/SKaplanOfficial/macimg/blob/main/CHANGELOG.md"
+
+[tool.setuptools]
+packages = ["macimg"]

@@ -1,9 +1,10 @@
 # macimg
+
 A Python package for manipulating images using Objective-C frameworks.
 
-# Examples
+## Examples
 
-## Example 1: Applying Image Filters
+### Example 1: Applying Image Filters
 
 ```python
 from macimg import Image
@@ -35,7 +36,7 @@ for index, filter in enumerate(filters):
 The code above produces the following sequence of images:
 ![Images produced by applying several filters sequentially](./assets/FilterExample.png)
 
-## Example 2: Applying Distortions
+### Example 2: Applying Distortions
 
 ```python
 from macimg import Image
